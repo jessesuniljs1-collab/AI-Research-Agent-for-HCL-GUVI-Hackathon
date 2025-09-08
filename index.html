@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYPERION - AI Research Intelligence Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__left">
+            <div class="logo">
+                <div class="logo__icon">⚡</div>
+                <span class="logo__text">HYPERION</span>
+                <span class="logo__subtitle">AI Research Intelligence</span>
+            </div>
+        </div>
+        <div class="header__center">
+            <nav class="nav-tabs">
+                <button class="nav-tab nav-tab--active" data-view="canvas">Research Canvas</button>
+                <button class="nav-tab" data-view="graph">Knowledge Graph</button>
+                <button class="nav-tab" data-view="bias">Bias Dashboard</button>
+                <button class="nav-tab" data-view="timeline">Timeline</button>
+            </nav>
+        </div>
+        <div class="header__right">
+            <div class="user-profile">
+                <div class="user-avatar">YU</div>
+                <span class="user-name">You</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Left Sidebar -->
+        <aside class="sidebar sidebar--left">
+            <div class="sidebar__section">
+                <h3 class="sidebar__title">Current Project</h3>
+                <div class="project-card">
+                    <div class="project-card__header">
+                        <h4>Climate Change Policy Impact Analysis 2025</h4>
+                        <div class="project-status project-status--active">Active</div>
+                    </div>
+                    <p class="project-card__desc">Comprehensive multi-modal research on global climate policies and their effectiveness</p>
+                </div>
+            </div>
+
+            <div class="sidebar__section">
+                <h3 class="sidebar__title">Team Members</h3>
+                <div class="team-list">
+                    <div class="team-member">
+                        <div class="team-member__avatar team-member__avatar--online">SC</div>
+                        <div class="team-member__info">
+                            <div class="team-member__name">Dr. Sarah Chen</div>
+                            <div class="team-member__role">Lead Researcher</div>
+                        </div>
+                        <div class="team-member__status team-member__status--online"></div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member__avatar team-member__avatar--online">MJ</div>
+                        <div class="team-member__info">
+                            <div class="team-member__name">Prof. Marcus Johnson</div>
+                            <div class="team-member__role">Policy Analyst</div>
+                        </div>
+                        <div class="team-member__status team-member__status--online"></div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member__avatar team-member__avatar--away">PS</div>
+                        <div class="team-member__info">
+                            <div class="team-member__name">Dr. Priya Sharma</div>
+                            <div class="team-member__role">Data Scientist</div>
+                        </div>
+                        <div class="team-member__status team-member__status--away"></div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member__avatar team-member__avatar--online">AT</div>
+                        <div class="team-member__info">
+                            <div class="team-member__name">Alex Thompson</div>
+                            <div class="team-member__role">Research Assistant</div>
+                        </div>
+                        <div class="team-member__status team-member__status--online"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar__section">
+                <h3 class="sidebar__title">Tools & Analytics</h3>
+                <div class="tools-grid">
+                    <button class="tool-card">
+                        <div class="tool-icon">📊</div>
+                        <span>Bias Analysis</span>
+                    </button>
+                    <button class="tool-card">
+                        <div class="tool-icon">🔍</div>
+                        <span>Deep Search</span>
+                    </button>
+                    <button class="tool-card">
+                        <div class="tool-icon">🤖</div>
+                        <span>AI Insights</span>
+                    </button>
+                    <button class="tool-card">
+                        <div class="tool-icon">📈</div>
+                        <span>Trend Analysis</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Research Canvas View -->
+            <div class="view-container view-container--active" id="canvasView">
+                <div class="canvas-toolbar">
+                    <div class="toolbar-group">
+                        <button class="btn btn--secondary" id="addNodeBtn">
+                            <span>➕</span> Add Research Item
+                        </button>
+                        <button class="btn btn--outline" id="exportBtn">
+                            <span>📊</span> Export Analysis
+                        </button>
+                    </div>
+                    <div class="toolbar-group">
+                        <div class="zoom-controls">
+                            <button class="btn btn--sm" id="zoomOut">-</button>
+                            <span id="zoomLevel">100%</span>
+                            <button class="btn btn--sm" id="zoomIn">+</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="research-canvas" id="researchCanvas">
+                    <div class="canvas-grid"></div>
+                    <svg class="connections-layer" id="connectionsLayer"></svg>
+                    <div class="nodes-layer" id="nodesLayer"></div>
+                    <div class="minimap">
+                        <div class="minimap__viewport"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Knowledge Graph View -->
+            <div class="view-container" id="graphView">
+                <div class="graph-controls">
+                    <input type="text" class="form-control" placeholder="Search nodes..." id="graphSearch">
+                    <select class="form-control" id="graphFilter">
+                        <option value="all">All Types</option>
+                        <option value="article">Articles</option>
+                        <option value="data">Data</option>
+                        <option value="insight">Insights</option>
+                    </select>
+                </div>
+                <div class="knowledge-graph" id="knowledgeGraph">
+                    <div class="graph-placeholder">Interactive Knowledge Graph will render here</div>
+                </div>
+            </div>
+
+            <!-- Bias Dashboard View -->
+            <div class="view-container" id="biasView">
+                <div class="bias-dashboard">
+                    <div class="bias-metrics">
+                        <div class="bias-card">
+                            <h4>Geographic Distribution</h4>
+                            <div class="chart-container" style="height: 200px; position: relative;">
+                                <canvas id="geoChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bias-card">
+                            <h4>Funding Sources</h4>
+                            <div class="chart-container" style="height: 200px; position: relative;">
+                                <canvas id="fundingChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bias-card">
+                            <h4>Temporal Distribution</h4>
+                            <div class="chart-container" style="height: 200px; position: relative;">
+                                <canvas id="temporalChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bias-alerts">
+                        <h4>Bias Alerts</h4>
+                        <div class="alert alert--warning">
+                            <strong>Geographic Bias Detected:</strong> 73% of studies focus on developed nations
+                        </div>
+                        <div class="alert alert--info">
+                            <strong>Funding Concentration:</strong> Government sources dominate at 45%
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline View -->
+            <div class="view-container" id="timelineView">
+                <div class="timeline-container">
+                    <div class="timeline-header">
+                        <h3>Research Evolution Timeline</h3>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">Dec 2024</div>
+                            <div class="timeline-content">
+                                <h4>COP28 Policy Analysis</h4>
+                                <p>Initial research on fossil fuel transition policies</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Jan 2025</div>
+                            <div class="timeline-content">
+                                <h4>Paris Agreement Review</h4>
+                                <p>Comprehensive analysis of implementation progress</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item timeline-item--current">
+                            <div class="timeline-date">Feb 2025</div>
+                            <div class="timeline-content">
+                                <h4>Economic Impact Correlation</h4>
+                                <p>AI-driven analysis of carbon pricing effectiveness</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar sidebar--right">
+            <div class="sidebar__section">
+                <h3 class="sidebar__title">AI Research Assistant</h3>
+                <div class="chat-interface">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message chat-message--ai">
+                            <div class="chat-message__avatar">🤖</div>
+                            <div class="chat-message__content">
+                                <p>Hello! I'm your AI research assistant. I've analyzed your current research and found some interesting insights. Would you like me to elaborate on any specific findings?</p>
+                            </div>
+                        </div>
+                        <div class="chat-message chat-message--user">
+                            <div class="chat-message__avatar">YU</div>
+                            <div class="chat-message__content">
+                                <p>What are the main bias issues you've detected?</p>
+                            </div>
+                        </div>
+                        <div class="chat-message chat-message--ai">
+                            <div class="chat-message__avatar">🤖</div>
+                            <div class="chat-message__content">
+                                <p>I've identified several bias patterns: 73% geographic bias toward developed nations, temporal bias favoring recent studies (68% from last 5 years), and funding concentration in government sources (45%). I recommend expanding research to include more developing nation perspectives.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" class="form-control" placeholder="Ask me about your research..." id="chatInput">
+                        <button class="btn btn--primary" id="sendChatBtn">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar__section">
+                <h3 class="sidebar__title">AI Insights</h3>
+                <div class="insights-list">
+                    <div class="insight-item">
+                        <div class="insight-item__icon">📊</div>
+                        <div class="insight-item__content">
+                            <p>Strong correlation found between carbon pricing policies and emission reductions (r=0.78)</p>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-item__icon">🌍</div>
+                        <div class="insight-item__content">
+                            <p>Geographic bias detected: 73% of studies focus on developed nations</p>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-item__icon">🔍</div>
+                        <div class="insight-item__content">
+                            <p>Research gap identified: Limited long-term impact studies beyond 5 years</p>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-item__icon">⚡</div>
+                        <div class="insight-item__content">
+                            <p>Conflicting perspectives on nuclear energy role in transition policies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar__section">
+                <h3 class="sidebar__title">Recent Activity</h3>
+                <div class="activity-feed">
+                    <div class="activity-item">
+                        <div class="activity-item__avatar">SC</div>
+                        <div class="activity-item__content">
+                            <div class="activity-item__text">
+                                <strong>Dr. Sarah Chen</strong> added research paper
+                            </div>
+                            <div class="activity-item__time">2 min ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-item__avatar">MJ</div>
+                        <div class="activity-item__content">
+                            <div class="activity-item__text">
+                                <strong>Prof. Marcus Johnson</strong> commented on Paris Agreement
+                            </div>
+                            <div class="activity-item__time">5 min ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-item__avatar">PS</div>
+                        <div class="activity-item__content">
+                            <div class="activity-item__text">
+                                <strong>Dr. Priya Sharma</strong> updated bias analysis
+                            </div>
+                            <div class="activity-item__time">12 min ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-item__avatar">AT</div>
+                        <div class="activity-item__content">
+                            <div class="activity-item__text">
+                                <strong>Alex Thompson</strong> connected research items
+                            </div>
+                            <div class="activity-item__time">18 min ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar__section">
+                <h3 class="sidebar__title">Upload Content</h3>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-area__icon">📎</div>
+                    <div class="upload-area__text">
+                        <p>Drag & drop files here</p>
+                        <p class="upload-area__subtext">PDF, Images, Videos, Text</p>
+                    </div>
+                    <input type="file" class="upload-area__input" id="fileInput" multiple>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal hidden" id="nodeModal">
+        <div class="modal__overlay"></div>
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 id="modalTitle">Research Item Details</h3>
+                <button class="modal__close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div class="node-details">
+                    <div class="node-details__field">
+                        <label>Title:</label>
+                        <input type="text" class="form-control" id="nodeTitle">
+                    </div>
+                    <div class="node-details__field">
+                        <label>Type:</label>
+                        <select class="form-control" id="nodeType">
+                            <option value="article">Article</option>
+                            <option value="data">Data</option>
+                            <option value="image">Image</option>
+                            <option value="video">Video</option>
+                            <option value="insight">Insight</option>
+                            <option value="question">Question</option>
+                        </select>
+                    </div>
+                    <div class="node-details__field">
+                        <label>Summary:</label>
+                        <textarea class="form-control" id="nodeSummary" rows="3"></textarea>
+                    </div>
+                    <div class="node-details__field">
+                        <label>Source:</label>
+                        <input type="text" class="form-control" id="nodeSource">
+                    </div>
+                    <div class="node-details__metrics">
+                        <div class="metric">
+                            <label>Credibility Score:</label>
+                            <div class="credibility-score">
+                                <span id="credibilityValue">95</span>%
+                                <div class="credibility-bar">
+                                    <div class="credibility-fill" id="credibilityFill"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <label>Bias Level:</label>
+                            <div class="bias-indicator bias-indicator--low" id="biasIndicator">Low</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button class="btn btn--outline" id="deleteNodeBtn">Delete</button>
+                <button class="btn btn--primary" id="saveNodeBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Cursors -->
+    <div class="live-cursors" id="liveCursors"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
